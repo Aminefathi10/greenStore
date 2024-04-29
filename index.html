@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>greencart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div id="header-1">
+            <div id="logo"><img width="60px" id="logo-img" src="icons/logo.png"><span id="greencartlogo">GreenCart</span></div>
+            <div id="search"><input type="text" id="search-input"><button id="search-button"><img src="icons/searsh.png"></button></div>
+            <div id="FLC">
+                <div class="left-icons">
+                    <img class="icon" src="icons/favorite.png"><p class="favlogcar">favorite</p>
+                </div>
+                <div class="left-icons">
+                    <img class="icon" src="icons/login.png"><p class="favlogcar">log in</p>
+                </div>
+                <div class="left-icons">
+                    <img class="icon" src="icons/cart.png"><p class="favlogcar">Cart</p>
+                    <span id="cart-items">5</span>
+                </div>
+            </div>
+        </div>
+        <div id="header-2">
+            <button id="all-button" class="hor-menu"><img width="30px" src="icons/menu.png">All</button>
+            <p class="hor-menu">today's deals</p>
+            <p class="hor-menu">Customer service</p>
+            <p class="hor-menu">gift cards</p>
+            <p class="hor-menu">sell</p>
+            <p class="hor-menu">register</p>
+        </div>
+        <!--slide menu goes here........-->
+    </header>
+    <div class="slider-container">
+        <div class="slider">
+            <img src="images/1.jpg" alt="Image 1">
+            <img src="images/2.jpg" alt="Image 2">
+            <img src="images/3.jpg" alt="Image 3">
+            <img src="images/4.jpg" alt="Image 3">
+        </div>
+        <button class="prev">❮</button>
+        <button class="next">❯</button>
+        <div id="banner-end"></div>
+    </div>
+        
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const slider = document.querySelector(".slider");
+    const images = document.querySelectorAll(".slider img");
+    let index = 0;
+    let lastIndex = images.length - 1;
+
+    document.querySelector(".prev").addEventListener("click", function() {
+        index = index === 0 ? lastIndex : index - 1;
+        slider.style.transform = `translateX(${-index * 100}%)`;
+    });
+
+    document.querySelector(".next").addEventListener("click", function() {
+        index = index === lastIndex ? 0 : index + 1;
+        slider.style.transform = `translateX(${-index * 100}%)`;
+    });
+
+    setInterval(function() {
+        index = index === lastIndex ? 0 : index + 1;
+        slider.style.transform = `translateX(${-index * 100}%)`;
+    }, 5000); // Change image every 2 seconds (2000ms)
+});
+
+    </script>
+    
+    <div id="container">
+    </div>
+    <script>
+        fetch('https://fakestoreapi.com/products').then(response => response.json())
+        .then(products => {
+            document.getElementById('container').innerHTML = 
+    products.map((product) => {
+      return `<div><img width="150px" src="${product.image}">
+      <h4>${product.title}</h4>
+      <p>${product.description}</p>
+      <p id="price"><strong>$${product.price}</strong></p>
+      <p>${product.rating.rate}⭐ ${product.rating.count} people</p>
+      <button><strong>Add to Cart</strong></button>
+      </div>`
+    }).join('');
+        })
+      
+    </script>
+</body>
+</html>
